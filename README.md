@@ -9,229 +9,127 @@
 </p>
 
 <p align="center">
-  <em>Predict. Analyze. Hunt. Go Viral.</em>
-</p>
-
-<p align="center">
-  An AI-powered content intelligence system designed to detect emerging trends, analyze content signals, and predict viral potential before trends explode.
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python" alt="Python">
-  <img src="https://img.shields.io/badge/AI-Powered-red?style=for-the-badge" alt="AI Powered">
-  <img src="https://img.shields.io/badge/Reddit-Integrated-orange?style=for-the-badge&logo=reddit" alt="Reddit">
-  <img src="https://img.shields.io/badge/YouTube-Integrated-red?style=for-the-badge&logo=youtube" alt="YouTube">
-  <img src="https://img.shields.io/badge/Local%20LLM-Supported-purple?style=for-the-badge" alt="Local LLM">
+  AI-powered content intelligence for creators, influencers, and celebrities.
 </p>
 
 ---
 
-## 🎯 What is VCH-AGENT?
+## About
 
-**VCH-AGENT (Viral Content Hunter)** is an AI-driven content intelligence and trend prediction system designed to identify content with growing viral potential.
+**VCH-AGENT** is an AI-powered system built to discover emerging content trends and identify opportunities before they reach peak attention.
 
-Instead of waiting until a topic has already become viral, VCH-AGENT focuses on **early signals** such as engagement velocity, content momentum, growth acceleration, audience interest, and platform activity.
+Instead of simply asking **"What is trending now?"**, VCH-AGENT focuses on a more useful question:
 
-The goal is simple:
+> **"What could become popular next?"**
 
-> **Find the signal before the trend becomes obvious.**
-
----
-
-## 🧠 System Architecture
-
-```mermaid
-flowchart TB
-    A["VCH-AGENT<br/>Viral Content Hunter"]
-
-    R["Reddit"]
-    Y["YouTube"]
-    I["Instagram<br/>Future"]
-    F["Facebook<br/>Future"]
-
-    D["Data Collection"]
-    N["Data Normalization"]
-    E["Feature Extraction"]
-
-    T["Trend Detection"]
-    C["Content Analysis"]
-
-    L["Local LLM"]
-    V["Virality Prediction"]
-
-    S["Viral Score"]
-    CF["Confidence Score"]
-    INS["Actionable Intelligence"]
-
-    A --> R
-    A --> Y
-    A --> I
-    A --> F
-
-    R --> D
-    Y --> D
-    I --> D
-    F --> D
-
-    D --> N
-    N --> E
-
-    E --> T
-    E --> C
-
-    T --> L
-    C --> L
-
-    L --> V
-
-    V --> S
-    V --> CF
-
-    S --> INS
-    CF --> INS
-```
+The idea is simple — collect early signals from social platforms, analyze their momentum, and turn them into useful insights for people who create content.
 
 ---
 
-## ⚡ The 72-Hour Advantage
+## 🎯 Built for Creators
 
-VCH-AGENT is designed around an important idea:
+VCH-AGENT is designed with **influencers, celebrities, content creators, YouTubers, social-media managers, and personal brands** in mind.
 
-**Detect emerging content before it reaches peak attention.**
+It can help creators:
+
+- Discover emerging topics
+- Identify rising conversations
+- Understand audience interest
+- Find content opportunities early
+- Compare trend momentum
+- Decide what to create next
+- Act before a trend becomes saturated
+
+The goal is not to tell creators what is already viral.
+
+**The goal is to help them find what might be viral next.**
+
+---
+
+## How It Works
 
 ```mermaid
 flowchart LR
-    A["Early Content Signal"]
-    B["Engagement Growth"]
-    C["Momentum Detection"]
-    D["AI Analysis"]
-    E["Virality Prediction"]
-    F["0–72 Hour Opportunity"]
-    G["Trend Explosion"]
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
+    A["Social Platforms"] --> B["VCH-AGENT"]
+    B --> C["Trend Detection"]
+    C --> D["AI Analysis"]
+    D --> E["Virality Prediction"]
+    E --> F["Creator Insight"]
 ```
 
-The objective is not simply to identify what is viral **now**, but to identify what has the potential to become viral **next**.
+VCH-AGENT collects content signals, analyzes their growth and engagement patterns, and produces intelligence that can help creators make better content decisions.
 
 ---
 
-# 🔍 Core Capabilities
+## Current Platform Focus
 
-### Early Trend Detection
+### 🔴 Reddit
 
-Identify emerging discussions and content using signals such as:
+Reddit provides valuable signals from communities and discussions, helping identify topics that are beginning to gain attention.
 
-- Engagement velocity
-- Content momentum
-- Growth acceleration
-- Interaction activity
-- Topic relevance
-- Audience interest
+### ▶️ YouTube
 
-### 📊 Virality Prediction
+YouTube provides content and engagement signals that can help identify rising topics and audience interests.
 
-Analyze collected signals to estimate whether content demonstrates characteristics associated with viral growth.
+### 📸 Instagram & 📘 Facebook
 
-The prediction layer is designed to produce:
+Instagram and Facebook are part of the broader multi-platform vision of VCH-AGENT and can be integrated as the platform develops.
+
+---
+
+## Core Capabilities
+
+### 🔍 Trend Detection
+
+Identify topics and discussions that are showing signs of increasing attention.
+
+### 📈 Momentum Analysis
+
+Analyze engagement and growth signals to understand whether interest around a topic is accelerating.
+
+### 🤖 AI Analysis
+
+Use AI to analyze content and provide meaningful context around emerging trends.
+
+### 🎯 Virality Prediction
+
+Estimate the potential of emerging content based on available signals and patterns.
+
+### ⏱️ Early Opportunity Detection
+
+The long-term objective is to provide creators with an **early-mover advantage**, including a potential **72-hour opportunity window** for promising trends.
+
+> The 72-hour concept is a project objective, not a guarantee that every prediction will be accurate.
+
+---
+
+## Example
+
+A future VCH-AGENT insight could look like:
 
 ```text
-Viral Score
-Confidence
-Trend Strength
-Growth Momentum
-Prediction Reasoning
-```
+🔥 TREND ALERT
 
-### 🤖 AI-Powered Analysis
+Topic: Emerging Topic XYZ
 
-VCH-AGENT includes support for **local LLM processing**, allowing AI analysis to be performed locally rather than making every operation dependent on cloud AI services.
+Momentum: HIGH
+Growth: ACCELERATING
+Viral Potential: HIGH
 
-### 🔴 Reddit Intelligence
+Recommended Platforms:
+YouTube + Instagram
 
-Reddit is one of the primary content sources.
+Why:
+Engagement around the topic is increasing rapidly
+across multiple communities.
 
-The system can work with signals including:
-
-- Posts
-- Discussions
-- Engagement
-- Community activity
-- Emerging topics
-- Content momentum
-
-### ▶️ YouTube Intelligence
-
-YouTube provides another major source of trend signals.
-
-Potential signals include:
-
-- Views
-- Engagement
-- Video popularity
-- Audience response
-- Topic trends
-- Growth patterns
-
-### 🌐 Multi-Platform Expansion
-
-The architecture is designed to expand to additional platforms.
-
-Planned integrations include:
-
-- 📸 Instagram
-- 📘 Facebook
-- 🎵 TikTok
-- 𝕏 X
-- Additional public content sources
-
-These should be treated as **future integrations** unless implemented in the current codebase.
-
----
-
-# 🔄 Intelligence Pipeline
-
-```mermaid
-flowchart TD
-    A["Content Sources"]
-    B["Data Collection"]
-    C["Normalization"]
-    D["Feature Extraction"]
-    E["Trend Signals"]
-    F["Content Signals"]
-    G["AI Analysis"]
-    H["Virality Model"]
-    I["Viral Score"]
-    J["Confidence"]
-    K["Actionable Intelligence"]
-
-    A --> B
-    B --> C
-    C --> D
-
-    D --> E
-    D --> F
-
-    E --> G
-    F --> G
-
-    G --> H
-
-    H --> I
-    H --> J
-
-    I --> K
-    J --> K
+Creator Opportunity:
+Create content around the topic before attention peaks.
 ```
 
 ---
 
-# 🏗️ Project Structure
+## Project Structure
 
 ```text
 VCH-AGENT/
@@ -269,50 +167,28 @@ VCH-AGENT/
 
 ---
 
-# 🧩 Core Components
+## Tech Stack
 
-| Component       | Purpose                       |
-| --------------- | ----------------------------- |
-| `reddit.py`     | Reddit data collection        |
-| `youtube.py`    | YouTube data collection       |
-| `extractors.py` | Content and signal extraction |
-| `domain.py`     | Core domain models            |
-| `service.py`    | Application/service logic     |
-| `local_llm.py`  | Local AI/LLM processing       |
-| `database.py`   | Data persistence              |
-| `config.py`     | Configuration management      |
-| `cli.py`        | Command-line interface        |
+- **Python**
+- **Local LLM**
+- **Reddit**
+- **YouTube**
+- **SQLite / Data Persistence**
+- **Pytest**
+- **Environment-based Configuration**
 
 ---
 
-# 🧪 Testing
+## Installation
 
-VCH-AGENT includes automated tests covering important parts of the system.
-
-```bash
-pytest
-```
-
-Current test areas include:
-
-- CLI behavior
-- Feature processing
-- Local LLM functionality
-- Reddit integration
-- YouTube integration
-
----
-
-# ⚙️ Installation
-
-## 1. Clone the repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/ajeem-suban/VCH-AGENT.git
 cd VCH-AGENT
 ```
 
-## 2. Create a virtual environment
+Create a virtual environment:
 
 ### Windows
 
@@ -328,43 +204,33 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-## 3. Install the project
+Install the project:
 
 ```bash
 pip install -e .
 ```
 
-## 4. Configure environment variables
-
-Copy:
+Configure your environment:
 
 ```text
-.env.example
+.env.example → .env
 ```
 
-to:
+Add the required API credentials and configuration values.
 
-```text
-.env
-```
-
-Then configure the required API credentials and application settings.
-
-**Never commit `.env` or expose API keys publicly.**
+**Never commit your `.env` file or expose API keys.**
 
 ---
 
-# 🚀 Running VCH-AGENT
+## Run
 
-Run:
+To view the available commands:
 
 ```bash
 python -m vch --help
 ```
 
-This displays the commands available in the current implementation.
-
-The main module can also be invoked with:
+Run the application with:
 
 ```bash
 python -m vch
@@ -372,114 +238,31 @@ python -m vch
 
 ---
 
-# 📈 Conceptual Prediction Flow
+## Testing
 
-```mermaid
-flowchart TD
-    A["New Content"]
-    B["Collect Signals"]
-    C["Measure Velocity"]
-    D["Measure Momentum"]
-    E["Analyze Topic"]
-    F["Local AI Analysis"]
-    G["Predict Future Growth"]
-    H{"High Viral Potential?"}
+Run the test suite with:
 
-    A --> B
-    B --> C
-    B --> D
-    B --> E
-
-    C --> F
-    D --> F
-    E --> F
-
-    F --> G
-    G --> H
-
-    H -->|Yes| I["High-Potential Trend"]
-    H -->|No| J["Continue Monitoring"]
-
-    I --> K["Actionable Insight"]
-    J --> B
+```bash
+pytest
 ```
 
 ---
 
-# 💡 Why VCH-AGENT?
+## Vision
 
-Traditional analytics primarily answers:
+VCH-AGENT is being built toward a **creator decision-intelligence system** — a system that doesn't just show creators what people are talking about, but helps them understand **where attention is moving**.
 
-> **What is popular right now?**
-
-VCH-AGENT aims to answer:
-
-> **What could become popular next?**
-
-```mermaid
-flowchart LR
-    A["Traditional Analytics"]
-    B["What is viral now?"]
-
-    C["VCH-AGENT"]
-    D["What could go viral next?"]
-
-    A --> B
-    C --> D
-```
-
-This makes **early detection** the central concept of the project.
+The long-term vision is to combine signals from multiple platforms with AI and predictive analysis to help creators make faster and smarter content decisions.
 
 ---
 
-# 🔬 Research Direction
-
-VCH-AGENT can evolve into a predictive content intelligence platform combining:
-
-- Time-series analysis
-- Natural Language Processing
-- Machine Learning
-- Large Language Models
-- Social media analytics
-- Engagement modeling
-- Trend detection
-- Anomaly detection
-- Cross-platform correlation
-- Predictive modeling
-
-The broader objective is to identify **weak signals before they become strong signals**.
-
----
-
-# 🛡️ Security
-
-Never commit:
-
-```text
-.env
-API keys
-Access tokens
-Private credentials
-Database secrets
-```
-
-Use `.env.example` to document required configuration variables without exposing credentials.
-
----
-
-# 📜 License
-
-Add your chosen open-source license here.
-
----
-
-# 👨‍💻 Author
+## Author
 
 **AJEEM SUBAN**
 
 B.Tech — Artificial Intelligence & Data Science
 
-AI/ML Developer | AI Systems Builder
+AI/ML Developer & AI Systems Builder
 
 ---
 
@@ -488,7 +271,276 @@ AI/ML Developer | AI Systems Builder
   <br>
   <em>Hunting Viral Content. Before It Happens.</em>
 </p>
+<p align="center">
+  <img src="assets/vch-agent-banner.png" alt="VCH-AGENT — Viral Content Hunter" width="100%">
+</p>
+
+<h1 align="center">VCH-AGENT</h1>
 
 <p align="center">
-  ⭐ Star the repository if you find the project interesting.
+  <strong>Viral Content Hunter</strong>
+</p>
+
+<p align="center">
+  AI-powered content intelligence for creators, influencers, and celebrities.
+</p>
+
+---
+
+## About
+
+**VCH-AGENT** is an AI-powered system built to discover emerging content trends and identify opportunities before they reach peak attention.
+
+Instead of simply asking **"What is trending now?"**, VCH-AGENT focuses on a more useful question:
+
+> **"What could become popular next?"**
+
+The idea is simple — collect early signals from social platforms, analyze their momentum, and turn them into useful insights for people who create content.
+
+---
+
+## 🎯 Built for Creators
+
+VCH-AGENT is designed with **influencers, celebrities, content creators, YouTubers, social-media managers, and personal brands** in mind.
+
+It can help creators:
+
+- Discover emerging topics
+- Identify rising conversations
+- Understand audience interest
+- Find content opportunities early
+- Compare trend momentum
+- Decide what to create next
+- Act before a trend becomes saturated
+
+The goal is not to tell creators what is already viral.
+
+**The goal is to help them find what might be viral next.**
+
+---
+
+## How It Works
+
+```mermaid
+flowchart LR
+    A["Social Platforms"] --> B["VCH-AGENT"]
+    B --> C["Trend Detection"]
+    C --> D["AI Analysis"]
+    D --> E["Virality Prediction"]
+    E --> F["Creator Insight"]
+```
+
+VCH-AGENT collects content signals, analyzes their growth and engagement patterns, and produces intelligence that can help creators make better content decisions.
+
+---
+
+## Current Platform Focus
+
+### 🔴 Reddit
+
+Reddit provides valuable signals from communities and discussions, helping identify topics that are beginning to gain attention.
+
+### ▶️ YouTube
+
+YouTube provides content and engagement signals that can help identify rising topics and audience interests.
+
+### 📸 Instagram & 📘 Facebook
+
+Instagram and Facebook are part of the broader multi-platform vision of VCH-AGENT and can be integrated as the platform develops.
+
+---
+
+## Core Capabilities
+
+### 🔍 Trend Detection
+
+Identify topics and discussions that are showing signs of increasing attention.
+
+### 📈 Momentum Analysis
+
+Analyze engagement and growth signals to understand whether interest around a topic is accelerating.
+
+### 🤖 AI Analysis
+
+Use AI to analyze content and provide meaningful context around emerging trends.
+
+### 🎯 Virality Prediction
+
+Estimate the potential of emerging content based on available signals and patterns.
+
+### ⏱️ Early Opportunity Detection
+
+The long-term objective is to provide creators with an **early-mover advantage**, including a potential **72-hour opportunity window** for promising trends.
+
+> The 72-hour concept is a project objective, not a guarantee that every prediction will be accurate.
+
+---
+
+## Example
+
+A future VCH-AGENT insight could look like:
+
+```text
+🔥 TREND ALERT
+
+Topic: Emerging Topic XYZ
+
+Momentum: HIGH
+Growth: ACCELERATING
+Viral Potential: HIGH
+
+Recommended Platforms:
+YouTube + Instagram
+
+Why:
+Engagement around the topic is increasing rapidly
+across multiple communities.
+
+Creator Opportunity:
+Create content around the topic before attention peaks.
+```
+
+---
+
+## Project Structure
+
+```text
+VCH-AGENT/
+│
+├── assets/
+│   └── vch-agent-banner.png
+│
+├── src/
+│   └── vch/
+│       ├── __init__.py
+│       ├── __main__.py
+│       ├── cli.py
+│       ├── config.py
+│       ├── database.py
+│       ├── domain.py
+│       ├── extractors.py
+│       ├── local_llm.py
+│       ├── reddit.py
+│       ├── service.py
+│       └── youtube.py
+│
+├── tests/
+│   ├── test_cli.py
+│   ├── test_feature_slice.py
+│   ├── test_local_llm.py
+│   ├── test_reddit.py
+│   └── test_youtube.py
+│
+├── .env.example
+├── .gitignore
+├── ARCHITECTURE_AUDIT.md
+├── pyproject.toml
+└── README.md
+```
+
+---
+
+## Tech Stack
+
+- **Python**
+- **Local LLM**
+- **Reddit**
+- **YouTube**
+- **SQLite / Data Persistence**
+- **Pytest**
+- **Environment-based Configuration**
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/ajeem-suban/VCH-AGENT.git
+cd VCH-AGENT
+```
+
+Create a virtual environment:
+
+### Windows
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install the project:
+
+```bash
+pip install -e .
+```
+
+Configure your environment:
+
+```text
+.env.example → .env
+```
+
+Add the required API credentials and configuration values.
+
+**Never commit your `.env` file or expose API keys.**
+
+---
+
+## Run
+
+To view the available commands:
+
+```bash
+python -m vch --help
+```
+
+Run the application with:
+
+```bash
+python -m vch
+```
+
+---
+
+## Testing
+
+Run the test suite with:
+
+```bash
+pytest
+```
+
+---
+
+## Vision
+
+VCH-AGENT is being built toward a **creator decision-intelligence system** — a system that doesn't just show creators what people are talking about, but helps them understand **where attention is moving**.
+
+The long-term vision is to combine signals from multiple platforms with AI and predictive analysis to help creators make faster and smarter content decisions.
+
+---
+
+## Author
+
+**AJEEM SUBAN**
+
+B.Tech — Artificial Intelligence & Data Science
+
+AI/ML Developer & AI Systems Builder
+
+---
+
+<p align="center">
+  <strong>VCH-AGENT</strong>
+  <br>
+  <em>Hunting Viral Content. Before It Happens.</em>
 </p>
