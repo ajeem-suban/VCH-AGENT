@@ -40,6 +40,14 @@ class CommandLineTests(unittest.TestCase):
         with patch("vch.cli.load_reddit_settings", side_effect=ConfigurationError("credentials required")), redirect_stderr(output):
             self.assertEqual(main(["outcomes", "collect", "--horizon", "72h"]), 1)
         self.assertIn("Outcome collection failed: credentials required", output.getvalue())
+
+    def test_trend_report_json_and_invalid_window(self) -> None:
+        with tempfile.TemporaryDirectory() as directory, patch("vch.cli.load_database_path", return_value=Path(directory) / "vch.sqlite3"):
+            output = io.StringIO()
+            with redirect_stdout(output):
+                self.assertEqual(main(["trends", "report", "--format", "json"]), 0)
+            self.assertIn('"posts": []', output.getvalue())
+        self.assertEqual(main(["trends", "report", "--hours", "0"]), 1)
     def test_reddit_harvest_persists_candidates_and_reports_result(self) -> None:
         settings = RedditSettings("client", "secret", "VCH test", ("python",))
         result = RedditHarvestResult(candidates=[candidate()], skipped_count=2)

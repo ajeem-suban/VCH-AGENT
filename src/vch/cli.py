@@ -17,6 +17,7 @@ from .database import VchDatabase
 from .local_llm import LlamaCppFeatureExtractor, LocalLlmUnavailableError
 from .reddit import RedditHarvestError, RedditHarvester, RedditMetricCollector
 from .service import FeatureExtractionService, OutcomeService, evaluation_summary, initial_metric_snapshot
+from .trends import TrendCollectionService, trend_report
 from .youtube import YouTubeHarvestError, YouTubeHarvester
 
 
@@ -39,6 +40,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _outcome_evaluate()
     if arguments.command == "outcomes" and arguments.outcome_command == "collect":
         return _collect_outcomes(int(arguments.horizon.removesuffix("h")))
+    if arguments.command == "trends" and arguments.trend_command == "collect":
+        return _collect_trends()
+    if arguments.command == "trends" and arguments.trend_command == "report":
+        return _report_trends(arguments.hours, arguments.format)
     parser.print_help()
     return 2
 
@@ -60,6 +65,12 @@ def _build_parser() -> argparse.ArgumentParser:
     outcome_commands.add_parser("evaluate", help="summarize recorded outcomes (not model accuracy)")
     collect = outcome_commands.add_parser("collect", help="collect due observations (requires a configured refresher)")
     collect.add_argument("--horizon", choices=("24h", "72h"), required=True, help="outcome horizon")
+    trends = commands.add_parser("trends", help="collect and analyze timestamped engagement evidence")
+    trend_commands = trends.add_subparsers(dest="trend_command")
+    trend_commands.add_parser("collect", help="run one due twelve-hour Reddit observation cycle")
+    report = trend_commands.add_parser("report", help="report stored trend evidence")
+    report.add_argument("--hours", type=int, default=48, help="analysis window in hours")
+    report.add_argument("--format", choices=("text", "json"), default="text", help="report format")
     return parser
 
 
@@ -186,3 +197,35 @@ def _collect_outcomes(horizon_hours: int) -> int:
         return 1
     print(f"Processed {horizon_hours}h outcomes: observed {result.observed}; pending {result.pending}; unavailable {result.unavailable}; failed {result.failed}.")
     return 1 if result.failed and not result.observed else 0
+
+
+def _collect_trends() -> int:
+    try:
+        database = VchDatabase(load_database_path())
+        database.initialize()
+        result = TrendCollectionService(database, RedditMetricCollector(database, load_reddit_settings())).collect_due()
+    except (ConfigurationError, sqlite3.Error, OSError, RedditHarvestError) as error:
+        print(f"Trend collection failed: {error}", file=sys.stderr)
+        return 1
+    print(f"Trend cycle: collected {result.collected}; skipped {result.skipped}; failed {result.failed}.")
+    return 1 if result.failed and not result.collected else 0
+
+
+def _report_trends(hours: int, output_format: str) -> int:
+    if hours < 1:
+        print("Trend report failed: --hours must be positive.", file=sys.stderr)
+        return 1
+    try:
+        database = VchDatabase(load_database_path())
+        database.initialize()
+        report = trend_report(database, hours)
+    except (sqlite3.Error, OSError, ValueError) as error:
+        print(f"Trend report failed: {error}", file=sys.stderr)
+        return 1
+    if output_format == "json":
+        print(json.dumps(report, sort_keys=True))
+    else:
+        print(f"Trend report at {report['generated_at']} over {hours}h")
+        for post in report["posts"]:
+            print(f"- {post['platform']}:{post['external_id']} observations={post['observation_count']} limitations={','.join(post['limitations']) or 'none'}")
+    return 0

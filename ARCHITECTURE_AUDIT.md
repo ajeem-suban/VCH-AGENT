@@ -66,6 +66,15 @@ submission ID. Attempts append a `follow_up` snapshot with actual UTC time.
 Transient failures are retryable after restart; unavailable content is terminal.
 Snapshot roles distinguish original T0 observations from later observations.
 
+## Slice 6: trend evidence
+
+Trend reports use immutable VCH-collected snapshots, not inferred provider
+history. The `trends collect` CLI is intentionally a single 12-hour-targeted
+cycle for an external scheduler. `trends report` compares ordered observations
+of the same content and reports missing metrics or insufficient observations
+instead of estimating values. Topic grouping is limited to existing
+community/channel metadata.
+
 The initial Reddit scan path now persists source content before local semantic-feature extraction. This preserves the T0 input even if an individual local LLM response is invalid.
 
 ## Risks

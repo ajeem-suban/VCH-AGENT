@@ -266,6 +266,12 @@ class VchDatabase:
             row = connection.execute("SELECT platform, external_id FROM content WHERE id = ?", (content_id,)).fetchone()
         return (str(row["platform"]), str(row["external_id"])) if row else None
 
+    def list_content_references(self) -> list[dict[str, object]]:
+        """Return non-secret content metadata needed for evidence reports."""
+        with self._connect() as connection:
+            rows = connection.execute("SELECT id, platform, external_id, url, community_or_channel FROM content ORDER BY id").fetchall()
+        return [dict(row) for row in rows]
+
     def store_prediction(self, prediction: PredictionRecord) -> PredictionRecord:
         """Store a prediction only when referenced features predate it."""
         with self._connect() as connection:

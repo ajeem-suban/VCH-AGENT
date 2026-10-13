@@ -291,3 +291,29 @@ count, and upvote ratio at actual UTC observation time. Transient errors are
 retryable; unavailable/deleted/private content is never treated as zero growth.
 The public YouTube Atom feed cannot reliably refresh arbitrary videos, so those
 outcomes are unavailable rather than fabricated.
+
+## Trend intelligence
+
+VCH records its own timestamped observations; Reddit and the public YouTube
+Atom feed do not supply defensible historical engagement time series. A current
+provider total is therefore stored as a new observation, never backfilled.
+
+Run one collection cycle (schedule this exact command every 12 hours with
+Windows Task Scheduler; VCH itself does not run a background scheduler):
+
+```powershell
+python -m vch trends collect
+```
+
+Generate an evidence report from stored observations:
+
+```powershell
+python -m vch trends report --hours 48
+python -m vch trends report --hours 48 --format json
+```
+
+Reports compare only same-post metrics with ordered timestamps. Percentage
+change is omitted for a zero baseline. Topic grouping uses the existing
+community/channel metadata and calls activity “increasing” only when at least
+two independently comparable posts increase; otherwise it reports insufficient
+evidence. Missed cycles and two-observation comparisons remain limitations.
