@@ -9,7 +9,8 @@ from typing import Any, Protocol
 from pydantic import ValidationError
 
 from .config import RedditSettings
-from .domain import ContentItem, Platform
+from .database import VchDatabase
+from .domain import CollectionStatus, ContentItem, MetricSnapshot, Platform
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +24,9 @@ class RedditClient(Protocol):
 
     def subreddit(self, display_name: str) -> Any:
         """Return a PRAW subreddit object."""
+
+    def submission(self, id: str) -> Any:
+        """Return one submission by its stable Reddit ID."""
 
 
 RedditClientFactory = Callable[[RedditSettings], RedditClient]
@@ -85,6 +89,39 @@ class RedditHarvester:
         except Exception as error:
             raise RedditHarvestError("Reddit listing could not be read completely.") from error
         return RedditHarvestResult(candidates=candidates, skipped_count=skipped_count)
+
+    def _get_client(self) -> RedditClient:
+        if self._client is None:
+            self._client = self._client_factory(self._settings)
+        return self._client
+
+
+class RedditMetricCollector:
+    """Refresh one stored Reddit submission without rediscovering it in a listing."""
+
+    def __init__(self, database: VchDatabase, settings: RedditSettings, client_factory: RedditClientFactory | None = None, clock: Clock | None = None) -> None:
+        self._database = database
+        self._settings = settings
+        self._client_factory = client_factory or _create_praw_client
+        self._clock = clock or (lambda: datetime.now(timezone.utc))
+        self._client: RedditClient | None = None
+
+    def collect(self, content_id: int, baseline: MetricSnapshot) -> MetricSnapshot:
+        reference = self._database.content_reference(content_id)
+        now = self._clock()
+        if reference is None or reference[0] != Platform.REDDIT.value:
+            return MetricSnapshot(content_id=content_id, platform=Platform.REDDIT, observed_at=now, collector_version="reddit-praw-v1", status=CollectionStatus.UNAVAILABLE, error_message="unsupported_content")
+        try:
+            submission = self._get_client().submission(id=reference[1])
+            # Accessing a field forces PRAW to resolve lazy submission objects.
+            score = _optional_number(submission, "score")
+            if getattr(submission, "removed_by_category", None) in {"deleted", "private"}:
+                return MetricSnapshot(content_id=content_id, platform=Platform.REDDIT, observed_at=now, collector_version="reddit-praw-v1", status=CollectionStatus.UNAVAILABLE, error_message="content_unavailable")
+            return MetricSnapshot(content_id=content_id, platform=Platform.REDDIT, observed_at=now, collector_version="reddit-praw-v1", reddit_score=score, reddit_comment_count=_optional_number(submission, "num_comments"), reddit_upvote_ratio=_optional_number(submission, "upvote_ratio"))
+        except Exception as error:
+            category = _safe_failure_category(error)
+            status = CollectionStatus.UNAVAILABLE if category == "content_unavailable" else CollectionStatus.FAILED
+            return MetricSnapshot(content_id=content_id, platform=Platform.REDDIT, observed_at=now, collector_version="reddit-praw-v1", status=status, error_message=category)
 
     def _get_client(self) -> RedditClient:
         if self._client is None:
@@ -160,3 +197,15 @@ def _create_praw_client(settings: RedditSettings) -> RedditClient:
         client_secret=settings.client_secret,
         user_agent=settings.user_agent,
     )
+
+
+def _safe_failure_category(error: Exception) -> str:
+    """Persist a stable category, never a provider exception containing request details."""
+    text = type(error).__name__.lower() + " " + str(error).lower()
+    if any(word in text for word in ("notfound", "not found", "forbidden", "private", "deleted")):
+        return "content_unavailable"
+    if any(word in text for word in ("ratelimit", "rate limit")):
+        return "rate_limited"
+    if any(word in text for word in ("auth", "forbidden", "unauthorized")):
+        return "authentication_failed"
+    return "collection_error"

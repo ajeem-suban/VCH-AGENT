@@ -36,6 +36,36 @@ tests/
 4. Add YouTube RSS harvesting and normalized content persistence. (Implemented with built-in HTTP/XML support.)
 5. Add snapshots and outcomes before training a predictive model.
 
+## Slice 5: measurement foundations
+
+`metric_snapshots` is append-only. A snapshot records the time VCH observed a
+source, not the time it was published. Harvest and scan commands store an honest
+T0 snapshot using the metrics already supplied by the collector: Reddit score,
+comment count and upvote ratio; or the YouTube Atom feed's view count when it is
+present. Missing source values remain `NULL`, never zero.
+
+`outcomes` has one logical row per content item and horizon (currently any
+positive number of hours, with 24 and 72 intended for normal use). It links a
+baseline snapshot to a later follow-up snapshot and records pending, observed,
+unavailable, or failed status. Relative growth is undefined for zero baselines;
+absolute change remains available.
+
+The persistence guard rejects a follow-up snapshot earlier than the outcome's
+target time. Prediction records also reject feature references extracted after
+their prediction timestamp. These rules prevent later observations being used as
+T0 data. Semantic dimensions remain uncalibrated inputs, not virality
+probabilities or a trained model.
+
+The public YouTube Atom feed is useful for discovery and its published view
+count, but it is not represented as a reliable per-video follow-up API. The
+outcome service is intentionally collector-injected so an optional, explicitly
+configured platform API can be added without fabricating values.
+
+Reddit follow-ups use the existing optional PRAW credentials and stored
+submission ID. Attempts append a `follow_up` snapshot with actual UTC time.
+Transient failures are retryable after restart; unavailable content is terminal.
+Snapshot roles distinguish original T0 observations from later observations.
+
 The initial Reddit scan path now persists source content before local semantic-feature extraction. This preserves the T0 input even if an individual local LLM response is invalid.
 
 ## Risks

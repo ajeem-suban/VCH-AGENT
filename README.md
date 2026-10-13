@@ -242,8 +242,9 @@ python -m vch
 
 Run the test suite with:
 
-```bash
-pytest
+```powershell
+$env:PYTHONPATH = "src"
+python -m unittest discover -s tests
 ```
 
 ---
@@ -271,3 +272,22 @@ AI/ML Developer & AI Systems Builder
   <br>
   <em>Hunting Viral Content. Before It Happens.</em>
 </p>
+# Outcome measurement
+
+Each `harvest` and `scan` run stores an immutable T0 metric snapshot alongside
+the normalized content. T0 is observation time, not publication time. Review
+coverage with:
+
+```powershell
+python -m vch outcomes status
+python -m vch outcomes evaluate
+```
+
+Evaluation reports recorded coverage and outcomes only; it does not claim model
+accuracy because VCH has no trained prediction model. Follow-up processing
+supports 24-hour and 72-hour horizons. It uses the optional configured Reddit
+PRAW client to refresh a stored submission by ID, recording score, comment
+count, and upvote ratio at actual UTC observation time. Transient errors are
+retryable; unavailable/deleted/private content is never treated as zero growth.
+The public YouTube Atom feed cannot reliably refresh arbitrary videos, so those
+outcomes are unavailable rather than fabricated.

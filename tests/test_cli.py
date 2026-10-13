@@ -14,6 +14,7 @@ from vch.domain import ContentItem, Platform, SemanticFeatures
 from vch.extractors import FixtureFeatureExtractor
 from vch.reddit import RedditHarvestResult
 from vch.youtube import YouTubeHarvestResult
+from vch.service import OutcomeBatchResult
 
 
 def candidate() -> ContentItem:
@@ -27,6 +28,18 @@ def candidate() -> ContentItem:
 
 
 class CommandLineTests(unittest.TestCase):
+    def test_outcome_collect_dispatches_reddit_service(self) -> None:
+        settings = RedditSettings("client", "secret", "VCH test", ("python",))
+        with tempfile.TemporaryDirectory() as directory, patch("vch.cli.load_database_path", return_value=Path(directory) / "vch.sqlite3"), patch("vch.cli.load_reddit_settings", return_value=settings), patch("vch.cli.OutcomeService") as service:
+            service.return_value.collect_due.return_value = OutcomeBatchResult(observed=1)
+            self.assertEqual(main(["outcomes", "collect", "--horizon", "24h"]), 0)
+            service.return_value.collect_due.assert_called_once_with(24)
+
+    def test_outcome_collect_missing_credentials_is_safe(self) -> None:
+        output = io.StringIO()
+        with patch("vch.cli.load_reddit_settings", side_effect=ConfigurationError("credentials required")), redirect_stderr(output):
+            self.assertEqual(main(["outcomes", "collect", "--horizon", "72h"]), 1)
+        self.assertIn("Outcome collection failed: credentials required", output.getvalue())
     def test_reddit_harvest_persists_candidates_and_reports_result(self) -> None:
         settings = RedditSettings("client", "secret", "VCH test", ("python",))
         result = RedditHarvestResult(candidates=[candidate()], skipped_count=2)
